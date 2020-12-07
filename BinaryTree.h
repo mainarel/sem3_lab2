@@ -79,8 +79,6 @@ public:
 	{
 		return this->root;
 	}
-	
-
 		void Insert(TKey new_key, TValue new_value) {
 			TreeNode<TKey,TValue>* InsertNode = new TreeNode<TKey,TValue>(new_key,new_value);
 			TreeNode<TKey, TValue>* st = this->root;
@@ -108,8 +106,7 @@ public:
 				}
 			}
 		}
-		static size_t height(TreeNode<TKey,TValue>* node)
-		{
+		static size_t height(TreeNode<TKey,TValue>* node){
 			size_t L;
 			size_t R;
 			if (node->left == nullptr && node->right == nullptr)
@@ -144,14 +141,12 @@ public:
 				return R;
 			}
 		}
-		size_t height()
-		{
+		size_t height()	{
 			return height(this->root);
 		}
 
-		void PrintTree(TreeNode<TKey,TValue>* node, size_t level)
-		{
-			if (node)
+		void PrintTree(TreeNode<TKey,TValue>* node, size_t level) {
+		if (node)
 			{
 				PrintTree(node->left, level + 1);
 				for (int i = 0; i < level - this->height(); i++) cout << "                ";
@@ -161,8 +156,7 @@ public:
 			}
 		}
 
-		
-		int _getcount(TreeNode <TKey, TValue>* subTree) //return # of items stored in container.
+		int _getcount(TreeNode <TKey, TValue>* subTree) //return # of items stored in container.	
 		{
 			int res = 0;
 			if (subTree == nullptr) return 0;
@@ -170,18 +164,15 @@ public:
 			res += _getcount(subTree->GetRight());
 			return res + 1;
 		}
-	virtual	int  GetCount()
-		{
+		int  GetCount() {
 			return _getcount(root);
 		}
 	
-		void Clear()
-		{
+		void Clear() {
 			_clear(root);
 			root = nullptr;
 		}
-		void _clear(TreeNode <TKey, TValue>* cur)
-		{
+		void _clear(TreeNode <TKey, TValue>* cur) {
 			if (cur == nullptr) return;
 			_clear(cur->GetLeft());
 			_clear(cur->GetRight());
@@ -198,8 +189,7 @@ public:
 			return newRoot;
 		}
 
-		void Trav_Inorder(TreeNode<TKey, TValue>* itemList, TreeNode <TKey, TValue>* cur, int& index)
-		{
+		void Trav_Inorder(TreeNode<TKey, TValue>* itemList, TreeNode <TKey, TValue>* cur, int& index) {
 			if (cur == nullptr) return;
 			Trav_Inorder(itemList, cur->GetLeft(), index);
 			itemList[index] = *cur;
@@ -207,8 +197,7 @@ public:
 			Trav_Inorder(itemList, cur->GetRight(), index);
 		}
 
-		void Balance()
-		{
+		void Balance(){
 			int index = 0;
 			int num = GetCount();
 			TreeNode <TKey, TValue>* itemList = new TreeNode <TKey, TValue>[num]();
@@ -218,8 +207,7 @@ public:
 			delete[] itemList;
 		}
 
-		TreeNode<TKey,TValue>* FindNode(TreeNode<TKey, TValue>* Node, TKey need_key)
-		{
+		TValue FindNode(TreeNode<TKey, TValue>* Node, TKey need_key) {
 			if (this->root == nullptr)
 				throw std::exception("Empty");
 			if (this->key == need_key)
@@ -238,13 +226,11 @@ public:
 				}
 			}
 		}
-		TreeNode<TKey, TValue>* FindNode(TKey key)
-		{
+		TValue FindNode(TKey key) {
 			return FindNode(this->root, key);
 		}
 		
-		void RemoveNode(const TKey& key)
-		{
+		void RemoveNode(const TKey& key) {
 			//bool found = false;
 			TreeNode <TKey, TValue>* cur = root, * parentPtr = nullptr;
 			while (cur != nullptr)
