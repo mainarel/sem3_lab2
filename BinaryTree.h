@@ -185,104 +185,6 @@ public:
 			_clear(cur->GetRight());
 			delete cur;
 		}
-
-
-		//balance
-		void DSW() {
-			if (nullptr != root) {
-				createBackbone();
-				createBalancedBT();
-			}
-		}
-
-		void createBackbone() {
-			TreeNode<TKey, TValue>* grandParent = nullptr;
-			TreeNode<TKey, TValue>* parent = root;
-			TreeNode<TKey, TValue>* leftChild;
-
-			while (nullptr != parent) {
-				leftChild = parent->left;
-				if (nullptr != leftChild) {
-					grandParent = rotateRight(grandParent, parent, leftChild);
-					parent = leftChild;
-				}
-				else {
-					grandParent = parent;
-					parent = parent->right;
-				}
-			}
-		}
-
-		TreeNode<TKey, TValue>* rotateRight(TreeNode<TKey, TValue>* grandParent, TreeNode<TKey, TValue>* parent, TreeNode<TKey, TValue>* leftChild) {
-			if (nullptr != grandParent) {
-				grandParent->right = leftChild;
-			}
-			else {
-				root = leftChild;
-			}
-			parent->left = leftChild->right;
-			leftChild->right = parent;
-			return grandParent;
-		}
-
-		void createBalancedBT() {
-			int n = 0;
-			for (TreeNode<TKey, TValue>* tmp = root; tmp != nullptr; tmp = tmp->right) {
-				n++;
-			}
-
-			int m = greatestPowerOf2LessThanN(n + 1) - 1;
-			makeRotations(n - m);
-
-			while (m > 1) {
-				makeRotations(m /= 2);
-			}
-		}
-
-		int greatestPowerOf2LessThanN(int n) {
-			int x = MSB(n);
-			return (1 << x);
-		}
-
-		int MSB(int n) {
-			int ndx = 0;
-			while (1 < n) {
-				n = (n >> 1);
-				ndx++;
-			}
-			return ndx;
-		}
-
-		void makeRotations(int bound) {
-			TreeNode<TKey, TValue>* grandParent = nullptr;
-			TreeNode<TKey, TValue>* parent = root;
-			TreeNode<TKey, TValue>* child = root->right;
-			for (; bound > 0; bound--) {
-				if (child != nullptr && child->right != nullptr) {
-					rotateLeft(grandParent, parent, child);
-					grandParent = child;
-					parent = grandParent->right;
-					child = parent->right;
-				}
-				else {
-					break;
-				}
-			}
-		}
-
-		void rotateLeft(TreeNode<TKey, TValue>* grandParent, TreeNode<TKey, TValue>* parent, TreeNode<TKey, TValue>* rightChild) {
-			if (nullptr != grandParent) {
-				grandParent->right = rightChild;
-			}
-			else {
-				root = rightChild;
-			}
-			parent->right = rightChild->left;
-			rightChild->left = parent;
-		}
-
-		///////////////////
-		
 	
 		TreeNode<TKey, TValue>* _balance(TreeNode <TKey, TValue>* itemList, int small, int large) //return the pointer of the root.
 		{
@@ -294,7 +196,6 @@ public:
 			return newRoot;
 		}
 
-	
 		void Trav_Inorder(TreeNode<TKey, TValue>* itemList, TreeNode <TKey, TValue>* cur, int& index)
 		{
 			if (cur == nullptr) return;
@@ -314,71 +215,7 @@ public:
 			root = _balance(itemList, 0, num - 1);
 			delete[] itemList;
 		}
-
-	
-		TValue& operator[](const TKey& key)
-		{
-			TreeNode <TKey, TValue>* cur = root;
-			if (root == nullptr)
-			{
-				root = new TreeNode <TKey, TValue>;
-				root->SetKey(key);
-				return root->ref_item();
-			}
-
-			while (cur != nullptr)
-			{
-				if (cur->ref_key() == key) return cur->ref_item();
-				else if (cur->ref_key() > key)
-				{
-					if (cur->GetLeft() != nullptr) cur = cur->GetLeft();
-					else
-					{
-						cur->SetLeft(new TreeNode <TKey, TValue>);
-						cur->GetLeft()->SetKey(key);
-						return cur->GetLeft()->ref_item();
-					}
-				}
-				else
-				{
-					if (cur->GetRight() != nullptr) cur = cur->GetRight();
-					else
-					{
-						cur->SetRight(new TreeNode <TKey, TValue>);
-						cur->GetRight()->setKey(key);
-						return cur->GetRight()->ref_item();
-					}
-				}
-			}
-		}
 		/*
-
-		void setKey(const TKey& new_key) {
-			key = new_key;
-		}
-
-		TreeNode<TKey, TValue>* getLeft() const {
-			return left;
-		}
-		TreeNode<TKey, TValue>* getRight() const {
-			return right;
-		}
-
-		TKey& ref_key() {
-			return key;
-		}
-
-		TValue& ref_item() {
-			return value;
-		}
-
-		bool operator == (const TreeNode<TKey, TValue>& a) {
-			if (key = a.ref_key())
-				return true;
-			else
-				return false;
-		}
-
 		bool operator != (const TreeNode<TKey, TValue>& a) {
 			return !(key == a.ref_key());
 		}
