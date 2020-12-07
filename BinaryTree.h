@@ -1,10 +1,11 @@
 #pragma once
 #include <string>
 #include <iostream>
+#include "IDictionary.h"
 using namespace std;
 
 template <class TKey, class TValue>
-class BinaryTree
+class BinaryTree 
 {
 public:
 	template <class TKey, class TValue>
@@ -78,8 +79,9 @@ public:
 	{
 		return this->root;
 	}
+	
 
-		void InsertNode(TKey new_key, TValue new_value) {
+		void Insert(TKey new_key, TValue new_value) {
 			TreeNode<TKey,TValue>* InsertNode = new TreeNode<TKey,TValue>(new_key,new_value);
 			TreeNode<TKey, TValue>* st = this->root;
 			TreeNode<TKey, TValue>* nxt = nullptr;
@@ -160,17 +162,17 @@ public:
 		}
 
 		
-		int _size(TreeNode <TKey, TValue>* subTree) //return # of items stored in container.
+		int _getcount(TreeNode <TKey, TValue>* subTree) //return # of items stored in container.
 		{
 			int res = 0;
 			if (subTree == nullptr) return 0;
-			res += _size(subTree->GetLeft());
-			res += _size(subTree->GetRight());
+			res += _getcount(subTree->GetLeft());
+			res += _getcount(subTree->GetRight());
 			return res + 1;
 		}
-		int  Size()
+	virtual	int  GetCount()
 		{
-			return _size(root);
+			return _getcount(root);
 		}
 	
 		void Clear()
@@ -208,12 +210,130 @@ public:
 		void Balance()
 		{
 			int index = 0;
-			int num = Size();
+			int num = GetCount();
 			TreeNode <TKey, TValue>* itemList = new TreeNode <TKey, TValue>[num]();
 			Trav_Inorder(itemList, root, index);
 			Clear();
 			root = _balance(itemList, 0, num - 1);
 			delete[] itemList;
+		}
+
+		TreeNode<TKey,TValue>* FindNode(TreeNode<TKey, TValue>* Node, TKey need_key)
+		{
+			if (this->root == nullptr)
+				throw std::exception("Empty");
+			if (this->key == need_key)
+			{
+				return Node->GetValue();
+			}
+			else
+			{
+				if (need_key < Node->key)
+				{
+					return FindNode(Node->left, need_key);
+				}
+				else
+				{
+					return FindNode(Node->right, need_key);
+				}
+			}
+		}
+		TreeNode<TKey, TValue>* FindNode(TKey key)
+		{
+			return FindNode(this->root, key);
+		}
+		
+		void RemoveNode(const TKey& key)
+		{
+			//bool found = false;
+			TreeNode <TKey, TValue>* cur = root, * parentPtr = nullptr;
+			while (cur != nullptr)
+			{
+				if (cur->ref_key() == key)
+				{
+					//found = true;
+					break;
+				}
+
+				else
+				{
+					parentPtr = cur;
+					if (cur->ref_key() > key) cur = cur->GetLeft();
+					else
+						cur = cur->GetRight();
+				}
+			}
+
+			/*if (!found)
+			{
+			  cout << key << "is not in the tree." << endl;
+			  return;
+			}*/
+
+			// the remove node is a leaf.
+			if ((cur->GetLeft() == nullptr) && (cur->GetRight() == nullptr))
+			{
+				if (parentPtr->GetLeft() == cur)
+					parentPtr->SetLeft(nullptr);
+				else
+					parentPtr->SetRight(nullptr);
+				delete cur;
+				return;
+			}
+
+			// the remove node has one child.
+			else if ((cur->GetLeft() == nullptr && cur->GetRight() != nullptr) || (cur->GetRight() == nullptr && cur->GetLeft() != nullptr))
+			{
+				if (parentPtr->GetLeft() == cur)
+				{
+					if (cur->GetLeft() != nullptr)
+					{
+						parentPtr->SetLeft(cur->GetLeft());
+						delete cur;
+					}
+					else
+						parentPtr->SetLeft(cur->GetRight());
+					delete cur;
+				}
+
+				else
+				{
+					if (cur->GetLeft() != nullptr)
+					{
+						parentPtr->SetRight(cur->GetLeft());
+						delete cur;
+					}
+					else
+						parentPtr->SetRight(cur->GetRight());
+					delete cur;
+				}
+			}
+
+			// the remove node has two children.
+			else if ((cur->GetLeft() != nullptr) && (cur->GetRight() != nullptr))
+			{
+				//replace the node with the largest node on its left subtree. 
+				TreeNode <TKey, TValue>* leftLargest = cur->GetLeft();
+				TreeNode <TKey, TValue>* leftLargestParent = nullptr;
+				while (leftLargest->GetRight() != nullptr) // find the largest on the left subtree.
+				{
+					leftLargestParent = leftLargest;
+					leftLargest = leftLargest->GetRight();
+				}
+				cur->SetKey(leftLargest->ref_key());
+				if (leftLargest->GetLeft() == nullptr)// leftLargest is a leaf;
+				{
+					leftLargestParent->SetRight(nullptr);
+					delete leftLargest;
+				}
+
+				else // leftLargest has one child on its left.
+				{
+					leftLargestParent->SetRight(leftLargest->GetLeft());
+					delete leftLargest;
+				}
+			}
+			return;
 		}
 		/*
 		bool operator != (const TreeNode<TKey, TValue>& a) {

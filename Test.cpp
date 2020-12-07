@@ -8,12 +8,13 @@ int main() {
 	size_t Tree_size = 10;
 	for (size_t i = 0; i  <Tree_size; i++)
 	{
-		Test_tree->InsertNode(i,i+1);
+		Test_tree->Insert(i,i+1);
 	}
 	Test_tree->PrintTree(Test_tree->GetRoot(),Test_tree->height());
 
 	Test_tree->Balance();
 	Test_tree->PrintTree(Test_tree->GetRoot(), Test_tree->height());
-
+	Test_tree->RemoveNode(6);
+	Test_tree->PrintTree(Test_tree->GetRoot(), Test_tree->height());
 	return 0;
 }
