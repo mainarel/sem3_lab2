@@ -4,35 +4,41 @@
 template <class TKey, class TElement>
 class IDictionary {
 private:
-	int Capacity;
+//	int Capacity;
 	int Count;
 
 public:
 	BinaryTree<TKey, TElement>* Tree;
-	IDictionary(int capacity) {
+	IDictionary() {
+		Tree = new BinaryTree<TKey, TElement>();
+	}
+
+
+
+	/*IDictionary(int capacity) {
 		this->Capacity = capacity;
 		this->Count = 0;
 		this->Tree = new BinaryTree<TKey, TElement>();
-	}
+	}*/
 
-	int GetCapacity() {
+	/*int GetCapacity() {
 		return this->Capacity;
-	}
+	}*/
 	int GetCount() {
-		return this->Count;
+		return this->Tree->GetCount;
 	}
 
-	TElement Get(TKey key) {
+	/*TElement Get(TKey key) {
 		auto node = this->Tree->FindNode(key);
 		if (node != nullptr) {
 			return node->value;
 		}
 		else return NULL;
-	}
+	}*/
 
-	bool ContainsKey(TKey key) {
+	/*bool ContainsKey(TKey key) {
 		return this->Tree->toCheck(key);
-	}
+	}*/
 
 	void Add(TKey key, TElement element) {
 		this->Tree->Insert(key, element);
@@ -41,6 +47,8 @@ public:
 
 	void Remove(TKey key) {
 		this->Tree->RemoveNode(key);
-		return;
+	}
+	void Clear() {
+		this->Tree->Clear();
 	}
 };
