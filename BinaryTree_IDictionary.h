@@ -163,10 +163,17 @@ public:
 		if (node)
 			{
 				PrintTree(node->left, level + 1);
-				for (int i = 0; i < level - this->Height(); i++) cout << "                ";
+				for (size_t i = 0; i < level - this->Height(); i++) cout << "                ";
 				cout << "[" << level - this->Height() << "] ";
 				cout <<"Key: "<< node->GetKey() <<"  Value: " <<node->GetValue() << endl;
 				PrintTree(node->right, level + 1);
+			}
+		}
+		void Print_key_value(TreeNode<TKey, TValue>* node, size_t level) {
+			if (node) {
+				Print_key_value(node->left, level + 1);
+				cout << "[" << node->GetKey() << "] = " << node->GetValue() << endl;
+				Print_key_value(node->right, level + 1);
 			}
 		}
 
@@ -241,7 +248,7 @@ public:
 		TValue FindNode(TKey key) {
 			return FindNode(this->root, key);
 		}
-		
+	
 		void RemoveNode(const TKey& key) {
 			//bool found = false;
 			TreeNode <TKey, TValue>* cur = root, * parentPtr = nullptr;
@@ -333,7 +340,6 @@ public:
 			}
 			return;
 		}
-
 		bool EntryCheck(TKey key)
 		{
 			TreeNode<TKey,TValue>* temp = this->root;
@@ -362,29 +368,25 @@ public:
 				return false;
 			}
 		}
-		/*
+		
 		bool operator != (const TreeNode<TKey, TValue>& a) {
-			return !(key == a.ref_key());
+			return !(this->key == a.GetKey());
 		}
-
 		bool operator > (const TreeNode<TKey, TValue>& a) {
-			if (key > a.ref_key())
+			if (this->key > a.GetKey())
 				return true;
 			else
 				return false;
 		}
-
 		bool operator < (const TreeNode<TKey, TValue>& a) {
-			return a.ref_key() > key;
+			return a.GetKey() > this->key;
 		}
-
 		bool operator >= (const TreeNode<TKey, TValue>& a) {
-			return !(key < a.ref_key());
+			return !(this->key < a.GetKey());
 		}
-
 		bool operator <= (const TreeNode<TKey, TValue>& a) {
-			return !(key > a.ref_key());
-		}*/
+			return !(this->key > a.GetKey());
+		}
 };
 	
 template <class TKey, class TElement>
@@ -398,8 +400,6 @@ public:
 	IDictionary() {
 		Tree = new BinaryTree<TKey, TElement>();
 	}
-
-
 
 	/*IDictionary(int capacity) {
 		this->Capacity = capacity;
@@ -426,8 +426,11 @@ public:
 		return this->Tree->EntryCheck(key);
 	}
 
-	void PrintAll() {
+	void PrintAsTree() {
 		this->Tree->PrintTree(Tree->GetRoot(), Tree->Height());
+	}
+	void PrintItems() {
+		this->Tree->Print_key_value(Tree->GetRoot(), Tree->Height());
 	}
 	void Add(TKey key, TElement element) {
 		this->Tree->Insert(key, element);
@@ -440,4 +443,5 @@ public:
 	void Clear() {
 		this->Tree->Clear();
 	}
+	
 };
