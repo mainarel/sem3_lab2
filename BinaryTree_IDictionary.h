@@ -151,9 +151,7 @@ public:
 					length = 1 + max(_height(subTree->GetLeft()), _height(subTree->GetRight()));
 						return length;
 					}
-			}
-
-		
+			}	
 		int Height()
 		{
 			return _height(root);
@@ -386,6 +384,31 @@ public:
 		}
 		bool operator <= (const TreeNode<TKey, TValue>& a) {
 			return !(this->key > a.GetKey());
+		}
+
+		void Map(TValue(*foo)(TValue), TreeNode<TKey, TValue>* Node)
+		{
+			Node->value = foo(Node->value);
+			if (Node->left != nullptr)
+			{
+				Map(foo, Node->left);
+			}
+			if (Node->right != nullptr)
+			{
+				Map(foo, Node->right);
+			}
+		}
+		void Map(TValue(*foo)(TValue))
+		{
+			if (this->root == nullptr)
+			{
+				cout << "Empty" << endl;
+			}
+			else
+			{
+				this->Map(foo, this->root);
+			}
+
 		}
 };
 	

@@ -7,7 +7,7 @@
 using namespace std;
 
 int main() {
-	
+	// test IDictionary
 	IDictionary<string, int>* IDic = new IDictionary<string, int>;
 	/*int size = 5;
 	for (int i = 0; i < size; i++) {
@@ -46,6 +46,7 @@ int main() {
 	  wordscopy -= (int)(size_of_pages_words / 2);
 	  ++count_of_pages;
 
+	  // count of pages
 	  if (wordscopy > 0) {
 		  for (int i = wordscopy; i > 0; ) {
 			  if ((count_of_pages % 10) == 0) {
@@ -62,34 +63,44 @@ int main() {
 	  cout << words->GetLength() << endl;
 	  int a = words->GetLength();
 
-	  for (int i = 0; i < count_of_pages; i++) {
 
-		  if (page_number == 1) {
-			  for (int j = 0; j < (int)(size_of_pages_words / 2) && (a >= 0); j++) {
-				  IDic->Add(words->Get(cur_size), page_number);
-				  cur_size++;
-				  --a;
-				  //if ()
-			  }
+	  // if all words on first page
+	  if (count_of_pages == 1) {
+		  while (cur_size != 26 ){
+			  IDic->Add(words->Get(cur_size), 1);
+			  cur_size++;
+			  --a;
 		  }
-		  else if ((page_number % 5 ) == 0) {
-				 for (int j = 0; j < (int)(size_of_pages_words * 3 / 4) && (a > 0); j++) {
-				  IDic->Add(words->Get(cur_size), page_number);
-				  cur_size++;
-				  --a;
-			  }
-		  }
+	  }  // if not
+	  else {
 
-		  else {
-			  for (int j=0; j< size_of_pages_words && (a > 0); j++) {
-				  IDic->Add(words->Get(cur_size), page_number);
-				  cur_size++;
-				  --a;
+		  for (int i = 0; i < count_of_pages; i++) {
+			  if (page_number == 1) {
+				  for (int j = 0; j < (int)(size_of_pages_words / 2) && (a >= 0); j++) {
+					  IDic->Add(words->Get(cur_size), page_number);
+					  cur_size++;
+					  --a;
+				  }
 			  }
-		  }
-		  page_number++;
+			  else if ((page_number % 5) == 0) {
+				  for (int j = 0; j < (int)(size_of_pages_words * 3 / 4) && (a > 0); j++) {
+					  IDic->Add(words->Get(cur_size), page_number);
+					  cur_size++;
+					  --a;
+				  }
+			  }
 
+			  else {
+				  for (int j = 0; j < size_of_pages_words && (a > 0); j++) {
+					  IDic->Add(words->Get(cur_size), page_number);
+					  cur_size++;
+					  --a;
+				  }
+			  }
+			  page_number++;
+		  }
 	  }
+
 	  IDic->PrintItems();
 	
 
