@@ -61,70 +61,143 @@ ListSequence<string>* return_list() {
 	}
 }
 
-void create_ID(ListSequence<string>* words, int size_of_pages_words) {
+
+int Length(ListSequence<string>* words)
+{ 
+	int length=0;
+	for (int i = 0; i < words->GetLength(); i++) {
+		length += words->Get(i).length();
+	}
+	
+	length += words->GetLength() - 1;
+	cout << "Length of string  - " << length << endl;
+	return length;
+}
+
+
+void create_ID(ListSequence<string>* words, int number_of_smth, int choose) {
+
 	IDictionary<string, int>* IDic = new IDictionary<string, int>();
 	int page_number = 1;
 	int cur_size = 0;
 	int count_of_pages = 0;
 
-	int  wordscopy = words->GetLength();
-	wordscopy -= (int)(size_of_pages_words / 2);
-	++count_of_pages;
+	if (choose == 2) {
+		int  wordscopy = words->GetLength();
+		wordscopy -= (int)(number_of_smth / 2);
+		++count_of_pages;
 
-	// count of pages
-	if (wordscopy > 0) {
-		for (int i = wordscopy; i > 0; ) {
-			if ((count_of_pages % 10) == 0) {
-				i -= (int)(size_of_pages_words * 3 / 4);
+		if (wordscopy > 0) {
+			for (int i = wordscopy; i > 0; ) {
+				if ((count_of_pages % 10) == 0) {
+					i -= (int)(number_of_smth * 3 / 4);
+				}
+				else {
+					i -= number_of_smth;
+				}
+				++count_of_pages;
 			}
-			else {
-				i -= size_of_pages_words;
+		}
+		int a = words->GetLength();
+		// if all words on first page
+		if (count_of_pages == 1) {
+			while (cur_size != words->GetLength()) {
+				IDic->Add(words->Get(cur_size), 1);
+				cur_size++;
+				--a;
 			}
-			++count_of_pages;
+		}  // if not
+		else {
+
+			for (int i = 0; i < count_of_pages; i++) {
+				if (page_number == 1) {
+					for (int j = 0; j < (int)(number_of_smth / 2) && (a >= 0); j++) {
+						IDic->Add(words->Get(cur_size), page_number);
+						cur_size++;
+						--a;
+					}
+				}
+				else if ((page_number % 10) == 0) {
+					for (int j = 0; j < (int)(number_of_smth * 3 / 4) && (a > 0); j++) {
+						IDic->Add(words->Get(cur_size), page_number);
+						cur_size++;
+						--a;
+					}
+				}
+
+				else {
+					for (int j = 0; j < number_of_smth && (a > 0); j++) {
+						IDic->Add(words->Get(cur_size), page_number);
+						cur_size++;
+						--a;
+					}
+				}
+				page_number++;
+			}
 		}
 	}
+	else { //if numbers of symbols
+		
+		int length = Length(words);
+		int  wordscopy = length;
+		wordscopy -= (int)(number_of_smth / 2);
+		++count_of_pages;
 
-	cout << count_of_pages << endl;
-	cout << words->GetLength() << endl;
-	int a = words->GetLength();
-
-
-	// if all words on first page
-	if (count_of_pages == 1) {
-		while (cur_size != words->GetLength()) {
-			IDic->Add(words->Get(cur_size), 1);
-			cur_size++;
-			--a;
+		if (wordscopy > 0) {
+			for (int i = length; i > 0; ) {
+				if ((count_of_pages % 10) == 0) {
+					i -= (int)(number_of_smth * 3 / 4);
+				}
+				else {
+					i -= number_of_smth;
+				}
+				++count_of_pages;
+			}
 		}
-	}  // if not
-	else {
+		cout << "Numbers of pages " << count_of_pages<< endl;
 
-		for (int i = 0; i < count_of_pages; i++) {
-			if (page_number == 1) {
-				for (int j = 0; j < (int)(size_of_pages_words / 2) && (a >= 0); j++) {
-					IDic->Add(words->Get(cur_size), page_number);
-					cur_size++;
-					--a;
-				}
+		int a = length; 
+		// if all words on first page
+		if (count_of_pages == 1) {
+			for (int i = 0; i < number_of_smth && (a > 0); i + words->Get(i).length()) {
+				IDic->Add(words->Get(cur_size), 1);
+				cur_size++;
+				a -= words->Get(i).length();
 			}
-			else if ((page_number % 5) == 0) {
-				for (int j = 0; j < (int)(size_of_pages_words * 3 / 4) && (a > 0); j++) {
-					IDic->Add(words->Get(cur_size), page_number);
-					cur_size++;
-					--a;
-				}
-			}
+		}  // if not
+		else {
 
-			else {
-				for (int j = 0; j < size_of_pages_words && (a > 0); j++) {
-					IDic->Add(words->Get(cur_size), page_number);
-					cur_size++;
-					--a;
+			for (int i = 0; i < count_of_pages; i++) {
+				if (page_number == 1) {
+					for (int j = 0; j < (int)(number_of_smth / 2) && (a > 0); j+ words->Get(i).length()+1) {
+						IDic->Add(words->Get(cur_size), page_number);
+						cur_size++;
+						a -= words->Get(i).length()+1;
+					}
 				}
+				else if ((page_number % 10) == 0) {
+					for (int j = 0; j < (int)(number_of_smth * 3 / 4) && (a > 0); j + words->Get(i).length()+1) {
+						IDic->Add(words->Get(cur_size), page_number);
+						cur_size++;
+						a -= words->Get(i).length()+1;
+					}
+				}
+
+				else {
+					for (int j = 0; j < number_of_smth && (a > 0); j +words->Get(i).length()+1) {
+						IDic->Add(words->Get(cur_size), page_number);
+						cur_size++;
+						a -= words->Get(i).length()+1;
+					}
+				}
+				page_number++;
 			}
-			page_number++;
 		}
 	}
+	//cout << count_of_pages << endl;
+
+
 	cout << "It is your IDictionary: " << endl;
 	IDic->PrintItems();
+
 }
