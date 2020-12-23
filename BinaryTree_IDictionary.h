@@ -409,6 +409,27 @@ public:
 			}
 
 		}
+	/*	TValue Reduce(TValue(*foo)(TValue, TValue), TValue start, string other) {
+			if (this->root == nullptr)
+				throw std::exception("Empty");
+
+			Sequence<TreeNode<TKey, TValue>*>* FirmwareTree = this->Firmware(other);
+			TValue result;
+
+			for (int i = 0; i < FirmwareTree->GetLength(); i++)
+			{
+				if (i == 0)
+				{
+					result = foo(FirmwareTree->Get(i)->Get(), start);
+				}
+				else
+				{
+					result = foo(FirmwareTree->Get(i)->Get(), result);
+				}
+			}
+
+			return result;
+		}*/
 };
 	
 template <class TKey, class TElement>
@@ -422,16 +443,6 @@ public:
 	IDictionary() {
 		Tree = new BinaryTree<TKey, TElement>();
 	}
-
-	/*IDictionary(int capacity) {
-		this->Capacity = capacity;
-		this->Count = 0;
-		this->Tree = new BinaryTree<TKey, TElement>();
-	}*/
-
-	/*int GetCapacity() {
-		return this->Capacity;
-	}*/
 	int GetCount() {
 		return this->Tree->GetCount;
 	}

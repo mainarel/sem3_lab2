@@ -7,13 +7,6 @@
 #include <sstream>
 using namespace std;
 
-void Print(Sequence<string>* seq, const int& length) {
-	cout << "It is your sequence: " << endl;
-	for (int i = 0; i < length; i++) {
-		cout <<seq->Get(i) << " ";
-	}
-	cout << endl;
-}
 ListSequence<string>* text_to_list () {
 	ListSequence<string>* list = new ListSequence<string>();
 	string word;

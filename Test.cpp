@@ -4,6 +4,7 @@
 #include <string>
 #include "ListSequence.hpp"
 #include "Text_to_ID.h"
+#include "Vecor_matrix.h"
 using namespace std;
 int main() {
 	
@@ -11,20 +12,36 @@ int main() {
 	 int size;
 	 int choose;
 	////////////////////////////////////////////////////
-	 cout << "Maximum page length type: " << endl << "1. Number of symbols" << endl << "2. Number of words" << endl;
+	 cout << "1. Alphabetical index  \n2. Sparse vectors and matrices"<<endl;
 	 cin >> choose;
+	 switch (choose) {
+	 case 1: {
+		 cout << "Maximum page length type: " << endl << "1. Number of symbols" << endl << "2. Number of words" << endl;
+		 cin >> choose;
 
-	cout << "Enter the size of pages: " << endl;
-	cin >> size;
-	while (size <= 0) {
-		cout << "Count cannot be zero or negative, try again "<<endl;
-		cin >> size;
-	}
-	create_ID(return_list(), size, choose);
-	/*cout << "Do you want to see the list of words?  " << endl << "Enter 'y' for yes and another for 'not' "<<endl;
-	cin >> mew;
-	if (mew == 'y') {
-		Print(return_list(), return_list()->GetLength());
-	}*/
+		 cout << "Enter the size of pages: " << endl;
+		 cin >> size;
+		 while (size <= 0) {
+			 cout << "Count cannot be zero or negative, try again " << endl;
+			 cin >> size;
+		 }
+		 create_ID(return_list(), size, choose);
+	 }
+	 case 2: { 
+		 cout << "1. Make sprace vector \n2. Make sprace matrix " << endl;
+		 cin >> choose;
+		 if (choose == 1) {
+			 // print vector
+			 //Print<int>(new_vector<int>(), new_vector<int>()->GetLength()-1);
+			 Print_svm<int,int>(make_sprace_vector<int,int>(new_vector<int>()));
+			 
+		 }
+		 if (choose == 2) {
+			// new_matrix<string>();
+			 Print_svm<int, string>(make_sprace_matrix(new_matrix<string>()));
+		 }
+	 }
+	 }
+	
 	return 0;
 }
