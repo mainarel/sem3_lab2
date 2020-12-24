@@ -16,7 +16,7 @@ public:
 		if (count > 0)
 			actualCount = count;
 		else
-			actualCount = 1;
+			actualCount = 0;
 		this->items = new DynamicArray<T>(actualCount);
 		for (int i = 0; i < actualCount; i++)
 		{
@@ -106,13 +106,13 @@ public:
 			temp->Set(i, this->items->Get(i));
 		}
 		temp->Set(index, value);
-		for (int i = index+1; i < this->count; i++) {
+		for (int i = index + 1; i < this->count; i++) {
 			temp->Set(i, this->items->Get(i));
 		}
 		this->count++;
 		delete items;
 		this->items = temp;
-		
+
 	}
 
 	virtual void RemoveAt(int index)  override

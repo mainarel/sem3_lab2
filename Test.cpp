@@ -38,7 +38,7 @@ int main() {
 		 }
 		 if (choose == 2) {
 			// new_matrix<string>();
-			 Print_svm<int, string>(make_sprace_matrix(new_matrix<string>()));
+			 Print_sprace_matrix<string>(make_sprace_matrix(new_matrix<string>()));
 		 }
 	 }
 	 }

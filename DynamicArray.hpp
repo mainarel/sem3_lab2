@@ -19,7 +19,7 @@ public:
 		}
 
 	}
-	DynamicArray(const int size)
+	DynamicArray(const int size = 0)
 	{
 		if (size < 0)
 			throw std::out_of_range("The size cannot be < 0");
@@ -50,7 +50,7 @@ public:
 	T Get(const int index)
 	{
 		if (index < 0 || index >= this->size)
-		throw std::out_of_range("Iundefined index  ");
+			throw std::out_of_range("Iundefined index  ");
 		return this->arr[index];
 	}
 

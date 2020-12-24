@@ -1,8 +1,13 @@
 #pragma once
 #include <string>
 #include <iostream>
+#include <utility>
 using namespace std;
 
+ostream& operator<< (ostream& s, pair<long, long> par) {
+	s << par.first << par.second;
+	return s;
+}
 template <class TKey, class TValue>
 class BinaryTree 
 {
@@ -31,6 +36,7 @@ public:
 		{
 		return this->key;
 		}
+
 		TValue& GetValue() {
 			return this->value;
 		}
@@ -99,44 +105,7 @@ public:
 			}
 		}
 
-		/*static size_t height(TreeNode<TKey,TValue>* node){
-			size_t L;
-			size_t R;
-			if (node->left == nullptr && node->right == nullptr)
-			{
-				return 0;
-			}
-			else
-			{
-				if (node->left != nullptr)
-				{
-					L = height(node->left) + 1;
-				}
-				else
-				{
-					L = 0;
-				}
-				if (node->right != nullptr)
-				{
-					R = height(node->right) + 1;
-				}
-				else
-				{
-					R = 0;
-				}
-			}
-			if (L > R)
-			{
-				return L;
-			}
-			else
-			{
-				return R;
-			}
-		}
-		size_t height()	{
-			return height(this->root);
-		}*/
+		
 		int _height(TreeNode<TKey, TValue>* subTree) // return the height of the binary search tree. # of nodes in the longest path.
 		{
 			int length=0;
@@ -173,6 +142,15 @@ public:
 				Print_key_value(node->right, level + 1);
 			}
 		}
+
+	/*	void print_if_pair(TreeNode<pair<long,long>, TValue>* node, size_t level) {
+			if (node) {
+				Print_key_value(node->left, level + 1);
+				pair<long, long> ex = dynamic_cast<pair<long,long> > (node->GetKey());
+				cout << "[" << ex.first << ex.second<< "] = " << node->GetValue() << endl;
+				Print_key_value(node->right, level + 1);
+			}
+		}*/
 
 		int _getcount(TreeNode <TKey, TValue>* subTree) //return # of items stored in container.	
 		{
@@ -432,6 +410,7 @@ public:
 		}*/
 };
 	
+ 
 template <class TKey, class TElement>
 class IDictionary {
 private:
