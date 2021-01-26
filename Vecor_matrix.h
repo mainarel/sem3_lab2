@@ -6,8 +6,6 @@
 #include "ArraySequence.hpp"
 #include <utility>
 
-
-
 template <class T>
 void Print(Sequence<T>* seq, const int& length) {
 	cout << "It is your sequence: " << endl;
@@ -71,11 +69,6 @@ ArraySequence<ArraySequence<string>*>* new_matrix() {
 		}
 	}
 	else { cout << "File didn't open: "; }
-
-	Print(matrix->Get(0), matrix->Get(0)->GetLength() );
-	Print(matrix->Get(1), matrix->Get(1)->GetLength() );
-	Print(matrix->Get(2), matrix->Get(2)->GetLength() );
-	//	cout << matrix->GetLength()-1 << endl;
 	return matrix;
 }
 
@@ -93,7 +86,6 @@ IDictionary<pair<long,long>, string>* make_sprace_matrix(ArraySequence<ArraySequ
 	return IDic;
 }
 
-//template <class T>
 template <class T, class TValue>
 IDictionary<int, TValue>* make_sprace_vector(ArraySequence<T>* vector) {
 	IDictionary<int, TValue>* IDic = new IDictionary<int, TValue>();
@@ -104,7 +96,6 @@ IDictionary<int, TValue>* make_sprace_vector(ArraySequence<T>* vector) {
 	}
 	return IDic;
 }
-
 
 template <class T, class TValue>
 void Print_svm(IDictionary<int, TValue>* IDic) {

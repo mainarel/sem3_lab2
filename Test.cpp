@@ -18,7 +18,7 @@ int main() {
 	 case 1: {
 		 cout << "Maximum page length type: " << endl << "1. Number of symbols" << endl << "2. Number of words" << endl;
 		 cin >> choose;
-
+		 int a = 0;
 		 cout << "Enter the size of pages: " << endl;
 		 cin >> size;
 		 while (size <= 0) {
@@ -31,8 +31,7 @@ int main() {
 		 cout << "1. Make sprace vector \n2. Make sprace matrix " << endl;
 		 cin >> choose;
 		 if (choose == 1) {
-			 // print vector
-			 //Print<int>(new_vector<int>(), new_vector<int>()->GetLength()-1);
+			 
 			 Print_svm<int,int>(make_sprace_vector<int,int>(new_vector<int>()));
 			 
 		 }

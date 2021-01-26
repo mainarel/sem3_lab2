@@ -187,9 +187,7 @@ void create_ID(ListSequence<string>* words, int number_of_smth, int choose) {
 			}
 		}
 	}
-	//cout << count_of_pages << endl;
-
-
+	
 	cout << "It is your IDictionary: " << endl;
 	IDic->PrintItems();
 
